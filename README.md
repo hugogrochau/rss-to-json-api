@@ -19,6 +19,8 @@ A simple express powered api for converting a RSS feed to json
 * `eslint` - To have a consistent code style
 * `babel` - For es2015 transpiling
 * `nodemon` - For live reloading during development 
+* `xml2js` - For converting from xml to json. Established library with 2k stars and with many fewer bugs than what I was implementing 
+* `lodash/get` - For extracting values from deeply nested json objects efficiently
 
 ## Author
 @hugogrochau
