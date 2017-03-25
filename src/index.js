@@ -1,6 +1,7 @@
 import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import parseFeed from './remote-feed-parser';
 
 const app = express();
@@ -14,14 +15,18 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.use(cors({
+  exposedHeaders: ['Link'],
+}));
+
 app.get('/', (req, res) => {
-  const url = req.query.rss_url;
+  const url = decodeURIComponent(req.query.rss_url);
   if (!url) {
-    return res.send('Please provide a rss_url', 400);
+    return res.status(400).send('Please provide a rss_url');
   }
   parseFeed(url)
   .then((parsed) => {
-    res.send(parsed);
+    res.status(200).send(parsed);
   });
 });
 

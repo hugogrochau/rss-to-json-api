@@ -1,52 +1,31 @@
 import fetch from 'isomorphic-fetch';
-import htmlParser from 'htmlparser2';
+import xml2js from 'xml2js';
 
-const feedParser = (body) => {
-  const result = { feed: {}, items: [] };
-  const validTags = ['title', 'link', 'description', 'pubDate', 'image', 'thumbnail'];
-
-  let isInsidePropertyTag = false;
-  let isInsideItem = false;
-  let currentTag = '';
-  let currentItem = {};
-
-  const parser = new htmlParser.Parser({
-    onopentag(name) {
-      if (name === 'item') {
-        isInsideItem = true;
-      } else if (validTags.includes(name)) {
-        currentTag = name;
-        isInsidePropertyTag = true;
-      }
-    },
-    ontext(text) {
-      if (isInsidePropertyTag) {
-        if (isInsideItem) {
-          currentItem[currentTag] = text;
-        } else {
-          result.feed[currentTag] = text;
-        }
-      }
-    },
-    onclosetag(name) {
-      if (isInsideItem && name === 'item') {
-        result.items.push(currentItem);
-        isInsideItem = false;
-        currentItem = {};
-      } else if (isInsidePropertyTag && name === currentTag) {
-        currentTag = '';
-        isInsidePropertyTag = false;
-      }
-    },
-  }, {
-    xmlMode: true,
+const convert = (body) =>
+  new Promise((resolve, reject) => {
+    const parser = new xml2js.Parser({
+      explicitArray: false,
+    });
+    parser.parseString(body, (err, data) => {
+      if (err) return reject(err);
+      return resolve(data);
+    });
   });
-  parser.write(body);
-  return result;
+
+const organize = (data) => {
+  const feed = data.rss.channel;
+  const items = feed.item;
+  delete feed.item;
+
+  if (feed.image && feed.image.url) {
+    feed.image = feed.image.url;
+  }
+  return { feed, items };
 };
 
 export default function parseFeed(url) {
   return fetch(url)
   .then((res) => res.text())
-  .then((body) => feedParser(body));
+  .then((body) => convert(body))
+  .then((json) => organize(json));
 }
