@@ -4,6 +4,7 @@
   "description": "API for converting rss to json",
   "main": "src/index.js",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node dist/index.js",
     "build": "babel src -s -D -d dist --ignore node_modules",
     "lint": "eslint src"
@@ -27,5 +28,9 @@
     "eslint": "^3.18.0",
     "eslint-config-airbnb-base": "^11.1.1",
     "eslint-plugin-import": "^2.2.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2"
   }
 }
