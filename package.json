@@ -1,0 +1,31 @@
+{
+  "name": "rss-to-json-api",
+  "version": "0.0.1",
+  "description": "API for converting rss to json",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "babel src -s -D -d dist --ignore node_modules",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hugogrochau/rss-to-json-api.git"
+  },
+  "author": "hugogrochau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hugogrochau/rss-to-json-api/issues"
+  },
+  "homepage": "https://github.com/hugogrochau/rss-to-json-api#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-core": "^6.24.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-register": "^6.24.0",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
