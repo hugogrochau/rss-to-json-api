@@ -3,7 +3,7 @@ import get from 'lodash/get';
 export default function simplify(data) {
   const feed = data.rss.channel;
   // rename item => items
-  const items = feed.item;
+  const items = feed.item || [];
   delete feed.item;
 
   if (feed.image && feed.image.url) {
@@ -28,7 +28,9 @@ export default function simplify(data) {
     if (mediaThumbnailUrl) {
       imageUrl = mediaThumbnailUrl || imageUrl;
     }
-    item.image = imageUrl;
+    if (imageUrl) {
+      item.image = imageUrl;
+    }
   });
 
   return { feed, items };

@@ -8,7 +8,8 @@
     "start": "node dist/index.js",
     "build": "babel src -s -D -d dist --ignore node_modules",
     "lint": "eslint src",
-    "watch": "nodemon -w src --exec \"babel-node src\""
+    "watch": "nodemon -w src --exec \"babel-node src\"",
+    "test": "mocha --compilers js:babel-register test/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,11 @@
   },
   "homepage": "https://github.com/hugogrochau/rss-to-json-api#readme",
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^3.18.0",
     "eslint-config-airbnb-base": "^11.1.1",
     "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0",
     "nodemon": "^1.11.0"
   },
   "dependencies": {
