@@ -26,6 +26,6 @@ export default function parseFeed(url) {
     if (err.code === 'ENOTFOUND') {
       return Promise.reject({ code: 404, message: 'Could not access the feed' });
     }
-    return Promise.reject({ code: 400, message: 'Invalid RSS feed'});
+    return Promise.reject({ code: 400, message: 'Invalid RSS feed' });
   });
 }
