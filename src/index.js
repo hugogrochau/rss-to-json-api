@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
     // TODO cache here
     res.status(200).send({ status: 'ok', ...parsed });
   })
-  .catch((err) => res.status(err.code).send({ status: 'error', message: err.message }));
+  .catch((err) => res.status(err.code || 500).send({ status: 'error', message: err.message || 'Internal server error' }));
 });
 
 app.listen(3000);

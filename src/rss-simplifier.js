@@ -2,6 +2,7 @@ import get from 'lodash/get';
 
 export default function simplify(data) {
   const feed = data.rss.channel;
+  // rename item => items
   const items = feed.item;
   delete feed.item;
 
