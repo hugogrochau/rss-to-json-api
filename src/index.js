@@ -26,8 +26,10 @@ app.get('/', (req, res) => {
   }
   parseFeed(url)
   .then((parsed) => {
-    res.status(200).send(parsed);
-  });
+    // TODO cache here
+    res.status(200).send({ status: 'ok', ...parsed });
+  })
+  .catch((err) => res.status(err.code).send({ status: 'error', message: err.message }));
 });
 
 app.listen(3000);
